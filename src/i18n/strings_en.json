@@ -1,0 +1,40 @@
+{
+  "title": "Radio Waves & Electromagnetic Fields",
+  "screens": {
+    "radioWaves": "Radio Waves"
+  },
+  "transmitterMovement": {
+    "title": "Transmitter Movement",
+    "manual": "Manual",
+    "oscillate": "Oscillate",
+    "frequency": "Frequency",
+    "amplitude": "Amplitude"
+  },
+  "fieldDisplayType": {
+    "title": "Field Display",
+    "curveWithVectors": "Curve with Vectors",
+    "curve": "Curve",
+    "fullField": "Full Field",
+    "none": "None"
+  },
+  "fieldSense": {
+    "title": "Field Sense",
+    "forceOnElectron": "Force on Electron",
+    "electricField": "Electric Field"
+  },
+  "fieldDisplayed": {
+    "title": "Field Displayed",
+    "radiated": "Radiated Field",
+    "static": "Static Field"
+  },
+  "electronPositions": "Electron Positions",
+  "plots": {
+    "transmitter": "Transmitter Electron Position",
+    "receiver": "Receiver Electron Position",
+    "time": "Time"
+  },
+  "legend": {
+    "title": "Legend",
+    "electron": "Electron"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Ondes radio et champs électromagnétiques",
+  "screens": {
+    "radioWaves": "Ondes radio"
+  },
+  "transmitterMovement": {
+    "title": "Mouvement de l'émetteur",
+    "manual": "Manuel",
+    "oscillate": "Osciller",
+    "frequency": "Fréquence",
+    "amplitude": "Amplitude"
+  },
+  "fieldDisplayType": {
+    "title": "Affichage du champ",
+    "curveWithVectors": "Courbe avec vecteurs",
+    "curve": "Courbe",
+    "fullField": "Champ complet",
+    "none": "Aucun"
+  },
+  "fieldSense": {
+    "title": "Sens du champ",
+    "forceOnElectron": "Force sur l'électron",
+    "electricField": "Champ électrique"
+  },
+  "fieldDisplayed": {
+    "title": "Champ affiché",
+    "radiated": "Champ rayonné",
+    "static": "Champ statique"
+  },
+  "electronPositions": "Positions des électrons",
+  "plots": {
+    "transmitter": "Position de l'électron émetteur",
+    "receiver": "Position de l'électron récepteur",
+    "time": "Temps"
+  },
+  "legend": {
+    "title": "Légende",
+    "electron": "Électron"
+  }
+}

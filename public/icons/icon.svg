@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#0b1e3a" />
+
+  <!-- Radiating wavefronts emanating from the antenna tip -->
+  <g fill="none" stroke="#6f9ad6" stroke-width="14" stroke-linecap="round">
+    <path d="M 256 150 A 110 110 0 0 1 366 260" />
+    <path d="M 256 110 A 150 150 0 0 1 406 260" />
+    <path d="M 256 70  A 190 190 0 0 1 446 260" />
+    <path d="M 256 150 A 110 110 0 0 0 146 260" />
+    <path d="M 256 110 A 150 150 0 0 0 106 260" />
+    <path d="M 256 70  A 190 190 0 0 0 66  260" />
+  </g>
+
+  <!-- Antenna mast -->
+  <rect x="246" y="150" width="20" height="290" rx="6" fill="#9aa3ad" />
+
+  <!-- Electron at the antenna tip -->
+  <circle cx="256" cy="150" r="34" fill="#5b9bd5" stroke="#bfe0ff" stroke-width="8" />
+</svg>
