@@ -33,6 +33,28 @@ const RadioWavesConstants = {
   FREQUENCY_SCALE: 1 / 5000, // slider value → strategy frequency
   AMPLITUDE_RANGE: new Range(0, 100),
   AMPLITUDE_DEFAULT: 50,
+
+  // ── Antenna geometry (offsets from the origin, model units) ─────────────────
+  TRANSMITTING_ANTENNA_TOP_OFFSET: 100, // how far the rod rises above the origin
+  TRANSMITTING_ANTENNA_BOTTOM_OFFSET: 250, // how far it drops below the origin
+  RECEIVING_ANTENNA_TOP_OFFSET: 50, // rod extent above the electron rest height
+  RECEIVING_ANTENNA_BOTTOM_OFFSET: 75, // rod extent below the electron rest height
+  RECEIVING_ELECTRON_X_OFFSET: 680, // receiving electron's initial x, right of the origin
+
+  // ── Field model tuning (from electron.js) ──────────────────────────────────
+  RETARDED_FIELD_LENGTH: 2000, // length of the position/acceleration history buffers
+  FIELD_SCALE_B: 1000, // fudge factor scaling field strength from acceleration
+  STATIC_FIELD_SCALE: 50, // additional scaling for the static (1/r²) field
+
+  // ── Movement-strategy tuning ────────────────────────────────────────────────
+  MANUAL_HISTORY_LENGTH: 10, // samples kept to estimate dragged velocity/acceleration
+  MANUAL_MEDIAN_WINDOW: 3, // median-filter window for the velocity history
+  MANUAL_MAX_ACCELERATION: 0.1, // assumed peak acceleration while dragging
+
+  // ── EMF-sensing receiver fudge factors (from emf-sensing.js) ────────────────
+  EMF_SINUSOIDAL_SCALE: 0.4, // receiver displacement ÷ source's retarded displacement
+  EMF_VERLET_DT_DIVISOR: 10, // shrinks dt for the receiver's Verlet step
+  EMF_RESTORE_DIVISOR: 30, // ease-back rate toward rest when the field is off
 } as const;
 
 export default RadioWavesConstants;

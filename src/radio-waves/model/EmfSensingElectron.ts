@@ -15,6 +15,7 @@
 import { Vector2, Vector2Property } from "scenerystack/dot";
 import type Antenna from "./Antenna.js";
 import type Electron from "./Electron.js";
+import Constants from "./RadioWavesConstants.js";
 
 export default class EmfSensingElectron {
   public readonly positionProperty: Vector2Property;
@@ -61,7 +62,7 @@ export default class EmfSensingElectron {
 
     if (source.isFieldOff(pos.x)) {
       // Field hasn't reached this antenna: ease toward rest (a no-op here, since we just reset).
-      v.setXY(0, (this.startPosition.y - pos.y) / 30);
+      v.setXY(0, (this.startPosition.y - pos.y) / Constants.EMF_RESTORE_DIVISOR);
       location.setXY(pos.x, pos.y + v.y * dt);
       return;
     }
@@ -69,12 +70,12 @@ export default class EmfSensingElectron {
     if (source.getMovementTypeAt(location) === "oscillate") {
       // For sinusoidal drive, mirror the source's retarded displacement (its 2nd derivative is
       // also a sinusoid, so position tracking suffices), scaled down.
-      const dy = (source.getPositionAt(location) - this.startPosition.y) * 0.4;
+      const dy = (source.getPositionAt(location) - this.startPosition.y) * Constants.EMF_SINUSOIDAL_SCALE;
       location.setXY(location.x, this.startPosition.y + dy);
     } else {
       // Otherwise treat the dynamic field as a force and take a small Verlet step.
       const a = source.getDynamicFieldAt(location);
-      const dt2 = dt / 10; // "complete fudge factor"
+      const dt2 = dt / Constants.EMF_VERLET_DT_DIVISOR; // "complete fudge factor"
       const newY = pos.y + v.y * dt2 + (a.y * dt2 * dt2) / 2;
       v.y += ((a.y + this.aPrevious.y) / 2) * dt2;
       location.setXY(pos.x + v.x * dt, newY);

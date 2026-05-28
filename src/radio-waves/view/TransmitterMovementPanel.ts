@@ -20,6 +20,14 @@ const TITLE_FONT = new PhetFont({ size: 15, weight: "bold" });
 const LABEL_FONT = new PhetFont(14);
 const CONTROL_FONT = new PhetFont(13);
 
+const RADIO_SPACING = 6;
+const CONTENT_SPACING = 10;
+const PANEL_CORNER_RADIUS = 6;
+const PANEL_X_MARGIN = 12;
+const PANEL_Y_MARGIN = 10;
+const SLIDER_DELTA = 1;
+const NUMBER_DECIMAL_PLACES = 0;
+
 export default class TransmitterMovementPanel extends Panel {
   public constructor(model: RadioWavesModel) {
     const strings = StringManager.getInstance().getTransmitterMovementStrings();
@@ -38,14 +46,14 @@ export default class TransmitterMovementPanel extends Panel {
         { value: "manual", createNode: () => label(strings.manualStringProperty) },
         { value: "oscillate", createNode: () => label(strings.oscillateStringProperty) },
       ],
-      { spacing: 6 },
+      { spacing: RADIO_SPACING },
     );
 
     const numberControlOptions = {
       titleNodeOptions: { font: CONTROL_FONT, fill: RadioWavesColors.foregroundColorProperty },
-      numberDisplayOptions: { textOptions: { font: CONTROL_FONT }, decimalPlaces: 0 },
+      numberDisplayOptions: { textOptions: { font: CONTROL_FONT }, decimalPlaces: NUMBER_DECIMAL_PLACES },
       sliderOptions: { constrainValue: (value: number) => Math.round(value) },
-      delta: 1,
+      delta: SLIDER_DELTA,
     };
 
     const frequencyControl = new NumberControl(
@@ -63,16 +71,16 @@ export default class TransmitterMovementPanel extends Panel {
 
     const content = new VBox({
       align: "left",
-      spacing: 10,
+      spacing: CONTENT_SPACING,
       children: [header, movementRadioGroup, frequencyControl, amplitudeControl],
     });
 
     super(content, {
       fill: RadioWavesColors.panelFillProperty,
       stroke: RadioWavesColors.panelStrokeProperty,
-      cornerRadius: 6,
-      xMargin: 12,
-      yMargin: 10,
+      cornerRadius: PANEL_CORNER_RADIUS,
+      xMargin: PANEL_X_MARGIN,
+      yMargin: PANEL_Y_MARGIN,
     });
 
     // The oscillator controls are only meaningful while oscillating.

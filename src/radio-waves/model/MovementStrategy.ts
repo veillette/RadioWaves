@@ -9,6 +9,7 @@
 
 import { Vector2 } from "scenerystack/dot";
 import type Electron from "./Electron.js";
+import Constants from "./RadioWavesConstants.js";
 
 export type MovementMode = "manual" | "oscillate";
 
@@ -19,8 +20,6 @@ export interface MovementStrategy {
   getAcceleration(): number;
   getMaxAcceleration(): number;
 }
-
-const HISTORY_LENGTH = 10;
 
 /**
  * Sliding-window median filter (window 3), matching `filters-shimmed`'s `median`. Returns a
@@ -60,13 +59,13 @@ export class ManualMovementStrategy implements MovementStrategy {
     this.electron = electron;
     this.position = electron.position.copy();
     this.velocity = new Vector2(0, 0);
-    this.yPosHistory = new Array(HISTORY_LENGTH).fill(0);
-    this.yVelHistory = new Array(HISTORY_LENGTH).fill(0);
-    this.yAccHistory = new Array(HISTORY_LENGTH).fill(0);
+    this.yPosHistory = new Array(Constants.MANUAL_HISTORY_LENGTH).fill(0);
+    this.yVelHistory = new Array(Constants.MANUAL_HISTORY_LENGTH).fill(0);
+    this.yAccHistory = new Array(Constants.MANUAL_HISTORY_LENGTH).fill(0);
   }
 
   public update(_dt: number): void {
-    this.numHistoryEntries = Math.min(this.numHistoryEntries + 1, HISTORY_LENGTH);
+    this.numHistoryEntries = Math.min(this.numHistoryEntries + 1, Constants.MANUAL_HISTORY_LENGTH);
     this.electron.setPosition(this.position);
     for (let i = this.yPosHistory.length - 1; i > 0; i--) {
       this.yPosHistory[i] = this.yPosHistory[i - 1] ?? 0;
@@ -88,7 +87,7 @@ export class ManualMovementStrategy implements MovementStrategy {
     // Carried over verbatim: the original stores the average velocity in the x component.
     this.velocity.x = velocityAvg;
 
-    this.yVelHistory = median(this.yVelHistory, 3);
+    this.yVelHistory = median(this.yVelHistory, Constants.MANUAL_MEDIAN_WINDOW);
     for (let i = 0; i < this.numHistoryEntries - 2; i++) {
       const a = (this.yVelHistory[i + 1] ?? 0) - (this.yVelHistory[i] ?? 0);
       this.yAccHistory[i] = a;
@@ -106,7 +105,7 @@ export class ManualMovementStrategy implements MovementStrategy {
   }
 
   public getMaxAcceleration(): number {
-    return 0.1;
+    return Constants.MANUAL_MAX_ACCELERATION;
   }
 
   public setPosition(position: Vector2): void {
@@ -117,9 +116,9 @@ export class ManualMovementStrategy implements MovementStrategy {
     this.position.set(start);
     this.velocity.setXY(0, 0);
     this.numHistoryEntries = 0;
-    this.yPosHistory = new Array(HISTORY_LENGTH).fill(0);
-    this.yVelHistory = new Array(HISTORY_LENGTH).fill(0);
-    this.yAccHistory = new Array(HISTORY_LENGTH).fill(0);
+    this.yPosHistory = new Array(Constants.MANUAL_HISTORY_LENGTH).fill(0);
+    this.yVelHistory = new Array(Constants.MANUAL_HISTORY_LENGTH).fill(0);
+    this.yAccHistory = new Array(Constants.MANUAL_HISTORY_LENGTH).fill(0);
     this.accelerationAvg = 0;
   }
 }

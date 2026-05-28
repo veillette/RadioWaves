@@ -56,16 +56,19 @@ export class RadioWavesModel implements TModel {
     const origin = Constants.SIMULATION_ORIGIN;
 
     this.transmittingAntenna = new Antenna(
-      new Vector2(origin.x, origin.y - 100),
-      new Vector2(origin.x, origin.y + 250),
+      new Vector2(origin.x, origin.y - Constants.TRANSMITTING_ANTENNA_TOP_OFFSET),
+      new Vector2(origin.x, origin.y + Constants.TRANSMITTING_ANTENNA_BOTTOM_OFFSET),
     );
     this.transmittingElectron = new Electron(new Vector2(origin.x, origin.y), this.transmittingAntenna);
 
     const startY = this.transmittingElectron.startPosition.y;
     const receivingX = origin.x + Constants.RECEIVING_X_OFFSET;
-    this.receivingAntenna = new Antenna(new Vector2(receivingX, startY - 50), new Vector2(receivingX, startY + 75));
+    this.receivingAntenna = new Antenna(
+      new Vector2(receivingX, startY - Constants.RECEIVING_ANTENNA_TOP_OFFSET),
+      new Vector2(receivingX, startY + Constants.RECEIVING_ANTENNA_BOTTOM_OFFSET),
+    );
     this.receivingElectron = new EmfSensingElectron(
-      new Vector2(origin.x + 680, startY),
+      new Vector2(origin.x + Constants.RECEIVING_ELECTRON_X_OFFSET, startY),
       this.receivingAntenna,
       this.transmittingElectron,
     );

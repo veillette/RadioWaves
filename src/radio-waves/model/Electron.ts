@@ -20,11 +20,6 @@ import {
 } from "./MovementStrategy.js";
 import Constants from "./RadioWavesConstants.js";
 
-// Length of the position/acceleration history ring buffers.
-const RETARDED_FIELD_LENGTH = 2000;
-// Fudge factor scaling field strength from acceleration.
-const B = 1000;
-const STATIC_FIELD_SCALE = 50;
 // History indices shifted per recorded frame (≈ propagation speed).
 const STEP_SIZE = Math.floor(Constants.SPEED_OF_LIGHT);
 
@@ -58,7 +53,7 @@ export default class Electron {
     this.positionProperty = new Vector2Property(position.copy());
     this.movementStrategy = new ManualMovementStrategy(this);
 
-    for (let i = 0; i < RETARDED_FIELD_LENGTH; i++) {
+    for (let i = 0; i < Constants.RETARDED_FIELD_LENGTH; i++) {
       this.positionHistory[i] = this.startPosition.copy();
       this.accelerationHistory[i] = new Vector2(0, 0);
       this.maxAccelerationHistory[i] = new Vector2(0, 0);
@@ -115,7 +110,7 @@ export default class Electron {
   }
 
   private recordPosition(position: Vector2): void {
-    for (let i = RETARDED_FIELD_LENGTH - 1; i > STEP_SIZE - 1; i--) {
+    for (let i = Constants.RETARDED_FIELD_LENGTH - 1; i > STEP_SIZE - 1; i--) {
       this.positionHistory[i]?.set(this.positionHistory[i - STEP_SIZE] ?? this.startPosition);
       this.accelerationHistory[i]?.set(this.accelerationHistory[i - STEP_SIZE] ?? Vector2.ZERO);
       this.maxAccelerationHistory[i]?.set(this.maxAccelerationHistory[i - STEP_SIZE] ?? Vector2.ZERO);
@@ -125,16 +120,16 @@ export default class Electron {
     const accel = this.movementStrategy.getAcceleration();
     const maxAccel = this.movementStrategy.getMaxAcceleration();
     const previousFront = this.accelerationHistory[0]?.y ?? 0;
-    const df = (previousFront - accel * B) / STEP_SIZE;
+    const df = (previousFront - accel * Constants.FIELD_SCALE_B) / STEP_SIZE;
     for (let i = 0; i < STEP_SIZE; i++) {
       this.positionHistory[i]?.set(position);
       const a = this.accelerationHistory[i];
       if (a) {
-        a.y = accel * B + i * df;
+        a.y = accel * Constants.FIELD_SCALE_B + i * df;
       }
       const maxA = this.maxAccelerationHistory[i];
       if (maxA) {
-        maxA.y = maxAccel * B;
+        maxA.y = maxAccel * Constants.FIELD_SCALE_B;
       }
       this.movementStrategyHistory[i] = this.movementStrategy.mode;
     }
@@ -180,7 +175,7 @@ export default class Electron {
       return new Vector2(0, 0);
     }
     const distanceSquared = mag * mag;
-    const scale = (B * STATIC_FIELD_SCALE) / distanceSquared;
+    const scale = (Constants.FIELD_SCALE_B * Constants.STATIC_FIELD_SCALE) / distanceSquared;
     return new Vector2((dx / mag) * scale, (dy / mag) * scale);
   }
 
@@ -255,7 +250,7 @@ export default class Electron {
     this.velocity.setXY(0, 0);
     this.previousPosition.set(this.startPosition);
     this.positionProperty.value = this.startPosition.copy();
-    for (let i = 0; i < RETARDED_FIELD_LENGTH; i++) {
+    for (let i = 0; i < Constants.RETARDED_FIELD_LENGTH; i++) {
       this.positionHistory[i]?.set(this.startPosition);
       this.accelerationHistory[i]?.setXY(0, 0);
       this.maxAccelerationHistory[i]?.setXY(0, 0);

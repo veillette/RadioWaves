@@ -10,6 +10,8 @@ import { Line, Node } from "scenerystack/scenery";
 import RadioWavesColors from "../../RadioWavesColors.js";
 import type Antenna from "../model/Antenna.js";
 
+const ROD_LINE_WIDTH = 5;
+
 export default class AntennaNode extends Node {
   public constructor(antenna: Antenna, modelViewTransform: ModelViewTransform2) {
     super();
@@ -20,7 +22,7 @@ export default class AntennaNode extends Node {
     this.addChild(
       new Line(p1.x, p1.y, p2.x, p2.y, {
         stroke: RadioWavesColors.antennaFillProperty,
-        lineWidth: 5,
+        lineWidth: ROD_LINE_WIDTH,
         lineCap: "round",
       }),
     );

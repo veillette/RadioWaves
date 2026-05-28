@@ -13,6 +13,7 @@ import { Circle, DragListener, Node } from "scenerystack/scenery";
 import RadioWavesColors from "../../RadioWavesColors.js";
 
 const RADIUS = 9;
+const STROKE_WIDTH = 1.5;
 
 type ElectronNodeOptions = {
   onDragStart?: () => void;
@@ -32,7 +33,7 @@ export default class ElectronNode extends Node {
       new Circle(RADIUS, {
         fill: RadioWavesColors.electronFillProperty,
         stroke: RadioWavesColors.electronStrokeProperty,
-        lineWidth: 1.5,
+        lineWidth: STROKE_WIDTH,
       }),
     );
 

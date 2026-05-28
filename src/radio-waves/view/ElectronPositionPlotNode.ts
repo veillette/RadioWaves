@@ -15,11 +15,21 @@ import RadioWavesColors from "../../RadioWavesColors.js";
 
 const WIDTH = 260;
 const HEIGHT = 160;
-const PLOT_X = 15;
+const PLOT_X = 15; // left/right inset = top area reserved for the title
 const PLOT_Y = 30;
+const PLOT_BOTTOM_MARGIN = 30; // space below the plot for the axis label
 const PLOT_WIDTH = WIDTH - 2 * PLOT_X;
-const PLOT_HEIGHT = HEIGHT - (PLOT_Y + 30);
-const TICK_SPACE = 20;
+const PLOT_HEIGHT = HEIGHT - (PLOT_Y + PLOT_BOTTOM_MARGIN);
+const TICK_SPACE = 20; // px between scrolling vertical gridlines
+
+const PANEL_CORNER_RADIUS = 6;
+const TITLE_FONT = new PhetFont(13);
+const AXIS_FONT = new PhetFont(11);
+const TITLE_TOP = 6;
+const AXIS_LABEL_TOP_GAP = 6; // gap below the plot to the axis label
+const TEXT_MAX_WIDTH = WIDTH - 16;
+const GRID_LINE_WIDTH = 1;
+const TRACE_LINE_WIDTH = 1.5;
 
 export default class ElectronPositionPlotNode extends Node {
   private readonly trace: PlotTraceNode;
@@ -34,17 +44,17 @@ export default class ElectronPositionPlotNode extends Node {
     super();
 
     const background = new Rectangle(0, 0, WIDTH, HEIGHT, {
-      cornerRadius: 6,
+      cornerRadius: PANEL_CORNER_RADIUS,
       fill: RadioWavesColors.panelFillProperty,
       stroke: RadioWavesColors.panelStrokeProperty,
     });
 
     const titleText = new Text(title, {
-      font: new PhetFont(13),
+      font: TITLE_FONT,
       fill: RadioWavesColors.foregroundColorProperty,
-      maxWidth: WIDTH - 16,
+      maxWidth: TEXT_MAX_WIDTH,
       centerX: WIDTH / 2,
-      top: 6,
+      top: TITLE_TOP,
     });
 
     const plotBackground = new Rectangle(PLOT_X, PLOT_Y, PLOT_WIDTH, PLOT_HEIGHT, {
@@ -57,11 +67,11 @@ export default class ElectronPositionPlotNode extends Node {
     this.trace.y = PLOT_Y;
 
     const axisLabel = new Text(timeLabel, {
-      font: new PhetFont(11),
+      font: AXIS_FONT,
       fill: RadioWavesColors.foregroundColorProperty,
-      maxWidth: WIDTH - 16,
+      maxWidth: TEXT_MAX_WIDTH,
       centerX: WIDTH / 2,
-      top: PLOT_Y + PLOT_HEIGHT + 6,
+      top: PLOT_Y + PLOT_HEIGHT + AXIS_LABEL_TOP_GAP,
     });
 
     this.children = [background, titleText, plotBackground, this.trace, axisLabel];
@@ -114,7 +124,7 @@ class PlotTraceNode extends CanvasNode {
   public override paintCanvas(context: CanvasRenderingContext2D): void {
     // Gridlines.
     context.strokeStyle = RadioWavesColors.plotGridProperty.value.toCSS();
-    context.lineWidth = 1;
+    context.lineWidth = GRID_LINE_WIDTH;
     context.beginPath();
     context.moveTo(0, PLOT_HEIGHT / 2);
     context.lineTo(PLOT_WIDTH, PLOT_HEIGHT / 2);
@@ -128,7 +138,7 @@ class PlotTraceNode extends CanvasNode {
 
     // Trace (newest sample at the left edge).
     context.strokeStyle = RadioWavesColors.plotLineProperty.value.toCSS();
-    context.lineWidth = 1.5;
+    context.lineWidth = TRACE_LINE_WIDTH;
     context.beginPath();
     const mid = PLOT_HEIGHT / 2;
     for (let i = 1; i < this.data.length; i++) {

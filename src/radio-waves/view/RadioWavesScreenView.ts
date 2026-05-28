@@ -31,6 +31,10 @@ type RadioWavesScreenViewOptions = ScreenViewOptions & { tandem: Tandem };
 
 const MARGIN = 14;
 const BOTTOM_CONTROLS_HEIGHT = 70;
+const PLAY_BUTTON_RADIUS = 22;
+const STEP_BUTTON_RADIUS = 18;
+const PLAYBACK_SPACING = 16;
+const CHECKBOX_FONT = new PhetFont(14);
 
 export class RadioWavesScreenView extends ScreenView {
   public constructor(model: RadioWavesModel, providedOptions: RadioWavesScreenViewOptions) {
@@ -106,14 +110,14 @@ export class RadioWavesScreenView extends ScreenView {
     });
 
     // ── Bottom controls ───────────────────────────────────────────────────────
-    const playPauseButton = new PlayPauseButton(model.isPlayingProperty, { radius: 22 });
+    const playPauseButton = new PlayPauseButton(model.isPlayingProperty, { radius: PLAY_BUTTON_RADIUS });
     const stepForwardButton = new StepForwardButton({
-      radius: 18,
+      radius: STEP_BUTTON_RADIUS,
       enabledProperty: DerivedProperty.not(model.isPlayingProperty),
       listener: () => model.stepOnce(),
     });
     const playbackControls = new HBox({
-      spacing: 16,
+      spacing: PLAYBACK_SPACING,
       align: "center",
       children: [playPauseButton, stepForwardButton],
       centerX: playLeft + usableWidth / 2,
@@ -123,7 +127,7 @@ export class RadioWavesScreenView extends ScreenView {
     const electronPositionsCheckbox = new Checkbox(
       model.showPositionPlotsProperty,
       new Text(StringManager.getInstance().getElectronPositionsStringProperty(), {
-        font: new PhetFont(14),
+        font: CHECKBOX_FONT,
         fill: RadioWavesColors.foregroundColorProperty,
       }),
       { left: layoutBounds.minX + MARGIN, bottom: layoutBounds.maxY - MARGIN },

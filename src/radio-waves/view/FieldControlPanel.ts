@@ -18,6 +18,12 @@ import type { FieldDisplayed, FieldDisplayType, FieldSense, RadioWavesModel } fr
 const HEADER_FONT = new PhetFont({ size: 14, weight: "bold" });
 const LABEL_FONT = new PhetFont(13);
 
+const RADIO_SPACING = 6;
+const CONTENT_SPACING = 10;
+const PANEL_CORNER_RADIUS = 6;
+const PANEL_X_MARGIN = 12;
+const PANEL_Y_MARGIN = 10;
+
 export default class FieldControlPanel extends Panel {
   public constructor(model: RadioWavesModel) {
     const stringManager = StringManager.getInstance();
@@ -38,7 +44,7 @@ export default class FieldControlPanel extends Panel {
         { value: "fullField", createNode: () => label(displayStrings.fullFieldStringProperty) },
         { value: "none", createNode: () => label(displayStrings.noneStringProperty) },
       ],
-      { spacing: 6 },
+      { spacing: RADIO_SPACING },
     );
 
     const senseGroup = new AquaRadioButtonGroup<FieldSense>(
@@ -47,7 +53,7 @@ export default class FieldControlPanel extends Panel {
         { value: "forceOnElectron", createNode: () => label(senseStrings.forceOnElectronStringProperty) },
         { value: "electricField", createNode: () => label(senseStrings.electricFieldStringProperty) },
       ],
-      { spacing: 6 },
+      { spacing: RADIO_SPACING },
     );
 
     const displayedGroup = new AquaRadioButtonGroup<FieldDisplayed>(
@@ -56,12 +62,12 @@ export default class FieldControlPanel extends Panel {
         { value: "radiated", createNode: () => label(displayedStrings.radiatedStringProperty) },
         { value: "static", createNode: () => label(displayedStrings.staticStringProperty) },
       ],
-      { spacing: 6 },
+      { spacing: RADIO_SPACING },
     );
 
     const content = new VBox({
       align: "left",
-      spacing: 10,
+      spacing: CONTENT_SPACING,
       children: [
         header(displayStrings.titleStringProperty),
         displayTypeGroup,
@@ -75,9 +81,9 @@ export default class FieldControlPanel extends Panel {
     super(content, {
       fill: RadioWavesColors.panelFillProperty,
       stroke: RadioWavesColors.panelStrokeProperty,
-      cornerRadius: 6,
-      xMargin: 12,
-      yMargin: 10,
+      cornerRadius: PANEL_CORNER_RADIUS,
+      xMargin: PANEL_X_MARGIN,
+      yMargin: PANEL_Y_MARGIN,
     });
 
     // The static field has no curve/vector representation, so it pins the Full Field display.

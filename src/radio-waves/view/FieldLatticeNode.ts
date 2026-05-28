@@ -25,6 +25,17 @@ const FIRST_ARROW_OFFSET = 25; // skip this close to the antenna
 const GRID_OFFSET_X = 32; // full-field grid left inset (from the source)
 const MIN_FULL_FIELD_LENGTH = 3; // below this (model units) a full-field arrow is omitted
 const CURVE_STEP = 10; // x sampling step (model units) for the curve
+const ORIGIN_SENTINEL_OFFSET = 0.001; // nudge off the exact origin to fix the curve start side
+
+// Arrow / line styling (view pixels).
+const CURVE_LINE_WIDTH = 1;
+const AXIS_ARROW_LINE_WIDTH = 3;
+const AXIS_ARROW_HEAD_WIDTH = 10;
+const AXIS_ARROW_HEAD_LENGTH = 10;
+const FULL_FIELD_LINE_WIDTH = 1;
+const FULL_FIELD_ARROW_HEAD_WIDTH = 6;
+const FULL_FIELD_ARROW_HEAD_LENGTH = 8;
+const MIN_ARROW_LENGTH = 1e-6; // below this an arrow is skipped (avoids divide-by-zero)
 
 export default class FieldLatticeNode extends CanvasNode {
   private readonly model: RadioWavesModel;
@@ -49,11 +60,11 @@ export default class FieldLatticeNode extends CanvasNode {
 
     const lo = this.minXModel - SPACING;
     const hi = this.maxXModel + SPACING;
-    this.leftXs.push(originX - 0.001);
+    this.leftXs.push(originX - ORIGIN_SENTINEL_OFFSET);
     for (let x = originX - FIRST_ARROW_OFFSET; x >= lo; x -= SPACING) {
       this.leftXs.push(x);
     }
-    this.rightXs.push(originX + 0.001);
+    this.rightXs.push(originX + ORIGIN_SENTINEL_OFFSET);
     for (let x = originX + FIRST_ARROW_OFFSET; x < hi; x += SPACING) {
       this.rightXs.push(x);
     }
@@ -98,7 +109,7 @@ export default class FieldLatticeNode extends CanvasNode {
     const radiated = this.model.fieldDisplayedProperty.value === "radiated";
     const curveColor = (radiated ? RadioWavesColors.forceArrowProperty : RadioWavesColors.fieldArrowProperty).value;
     context.strokeStyle = curveColor.toCSS();
-    context.lineWidth = 1;
+    context.lineWidth = CURVE_LINE_WIDTH;
 
     this.drawCurveSide(context, this.leftXs);
     this.drawCurveSide(context, this.rightXs);
@@ -109,7 +120,7 @@ export default class FieldLatticeNode extends CanvasNode {
         .value;
       context.strokeStyle = arrowColor.toCSS();
       context.fillStyle = arrowColor.toCSS();
-      context.lineWidth = 3;
+      context.lineWidth = AXIS_ARROW_LINE_WIDTH;
       this.drawAxisArrows(context, this.leftXs, sense);
       this.drawAxisArrows(context, this.rightXs, sense);
     }
@@ -165,8 +176,8 @@ export default class FieldLatticeNode extends CanvasNode {
         mvt.modelToViewY(originY),
         mvt.modelToViewX(x),
         mvt.modelToViewY(tipY),
-        10,
-        10,
+        AXIS_ARROW_HEAD_WIDTH,
+        AXIS_ARROW_HEAD_LENGTH,
       );
     }
   }
@@ -179,7 +190,7 @@ export default class FieldLatticeNode extends CanvasNode {
     const color = (sense === 1 ? RadioWavesColors.forceArrowProperty : RadioWavesColors.fieldArrowProperty).value;
     context.strokeStyle = color.toCSS();
     context.fillStyle = color.toCSS();
-    context.lineWidth = 1;
+    context.lineWidth = FULL_FIELD_LINE_WIDTH;
 
     for (const point of this.gridPoints) {
       const field = radiated ? this.model.getDynamicFieldAt(point) : this.model.getStaticFieldAt(point);
@@ -196,8 +207,8 @@ export default class FieldLatticeNode extends CanvasNode {
         mvt.modelToViewY(oy),
         mvt.modelToViewX(ox + fx),
         mvt.modelToViewY(oy + fy),
-        6,
-        8,
+        FULL_FIELD_ARROW_HEAD_WIDTH,
+        FULL_FIELD_ARROW_HEAD_LENGTH,
       );
     }
   }
@@ -215,7 +226,7 @@ export default class FieldLatticeNode extends CanvasNode {
     const dx = x2 - x1;
     const dy = y2 - y1;
     const length = Math.hypot(dx, dy);
-    if (length < 1e-6) {
+    if (length < MIN_ARROW_LENGTH) {
       return;
     }
     const ux = dx / length;
