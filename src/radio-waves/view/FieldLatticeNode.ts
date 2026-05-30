@@ -106,8 +106,15 @@ export default class FieldLatticeNode extends CanvasNode {
 
   // ── Curve (+ optional vertical arrows) ──────────────────────────────────────
   private paintCurve(context: CanvasRenderingContext2D, withVectors: boolean): void {
-    const radiated = this.model.fieldDisplayedProperty.value === "radiated";
-    const curveColor = (radiated ? RadioWavesColors.forceArrowProperty : RadioWavesColors.fieldArrowProperty).value;
+    // The curve uses the same color convention as the arrows: red for "Force on Electron",
+    // blue for "Electric Field". The earlier port keyed this off fieldDisplayedProperty
+    // (radiated vs static), but static always forces fullField so the curve is never
+    // shown in static mode — the sense is the right discriminator.
+    const curveColor = (
+      this.model.fieldSenseProperty.value === "forceOnElectron"
+        ? RadioWavesColors.forceArrowProperty
+        : RadioWavesColors.fieldArrowProperty
+    ).value;
     context.strokeStyle = curveColor.toCSS();
     context.lineWidth = CURVE_LINE_WIDTH;
 

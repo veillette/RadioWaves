@@ -25,6 +25,7 @@ import ElectronNode from "./ElectronNode.js";
 import ElectronPositionPlotNode from "./ElectronPositionPlotNode.js";
 import FieldControlPanel from "./FieldControlPanel.js";
 import FieldLatticeNode from "./FieldLatticeNode.js";
+import LegendNode from "./LegendNode.js";
 import TransmitterMovementPanel from "./TransmitterMovementPanel.js";
 
 type RadioWavesScreenViewOptions = ScreenViewOptions & { tandem: Tandem };
@@ -147,10 +148,13 @@ export class RadioWavesScreenView extends ScreenView {
     });
 
     // ── Right column positioning ──────────────────────────────────────────────
+    const legendNode = new LegendNode();
     transmitterPanel.right = layoutBounds.maxX - MARGIN;
     transmitterPanel.top = MARGIN;
     fieldPanel.right = layoutBounds.maxX - MARGIN;
     fieldPanel.top = transmitterPanel.bottom + MARGIN;
+    legendNode.right = layoutBounds.maxX - MARGIN;
+    legendNode.top = fieldPanel.bottom + MARGIN;
 
     this.children = [
       fieldLatticeNode,
@@ -162,6 +166,7 @@ export class RadioWavesScreenView extends ScreenView {
       receiverPlot,
       transmitterPanel,
       fieldPanel,
+      legendNode,
       playbackControls,
       electronPositionsCheckbox,
       resetAllButton,
@@ -171,11 +176,10 @@ export class RadioWavesScreenView extends ScreenView {
     // Repaint the field whenever the source electron moves (each played frame, and on reset).
     model.transmittingElectron.positionProperty.link(() => fieldLatticeNode.update());
     // Advance the scrolling plots once per fixed model step (constant-dt sampling).
+    // Always push data regardless of visibility so the traces stay current when revealed.
     model.steppedEmitter.addListener(() => {
-      if (model.showPositionPlotsProperty.value) {
-        transmitterPlot.update();
-        receiverPlot.update();
-      }
+      transmitterPlot.update();
+      receiverPlot.update();
     });
   }
 }
