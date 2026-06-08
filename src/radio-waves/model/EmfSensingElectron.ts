@@ -6,10 +6,9 @@
  * held manual MovementStrategy — and then nudged by the field radiated from the source electron:
  *
  *   - field hasn't arrived yet  → stays at rest
- *   - source was oscillating    → mirrors the source's retarded position (scaled by 0.4)
- *   - otherwise (manual source) → a small Verlet step driven by the dynamic field
+ *   - otherwise                 → mirrors the source's retarded position (scaled by 0.4)
  *
- * Ported from `models/electron/emf-sensing.js`. The 0.4 / dt÷10 / ÷30 fudge factors are verbatim.
+ * Ported from `models/electron/emf-sensing.js`. The 0.4 / ÷30 fudge factors are verbatim.
  */
 
 import { Vector2, Vector2Property } from "scenerystack/dot";
@@ -24,9 +23,7 @@ export default class EmfSensingElectron {
   private readonly positionConstraint: Antenna;
   private readonly sourceElectron: Electron;
 
-  private readonly velocity = new Vector2(0, 0);
   private readonly location = new Vector2(0, 0); // reused field-sampling point
-  private readonly aPrevious = new Vector2(0, 0); // previous acceleration (Verlet)
 
   public constructor(position: Vector2, positionConstraint: Antenna, sourceElectron: Electron) {
     this.startPosition = position.copy();
@@ -49,45 +46,27 @@ export default class EmfSensingElectron {
     this.positionProperty.value = constrained;
   }
 
-  public update(dt: number): void {
-    // Pin to the constrained rest position with zero vertical velocity (the original's inherited
-    // manual-strategy reset). The EMF response below then displaces from here.
+  public update(_dt: number): void {
+    // Pin to the constrained rest position each frame; the EMF response below displaces from here.
     this.setPosition(this.startPosition);
-    this.velocity.setXY(0, 0);
 
     const pos = this.position;
-    const v = this.velocity;
     const location = this.location;
     const source = this.sourceElectron;
 
     if (source.isFieldOff(pos.x)) {
-      // Field hasn't reached this antenna: ease toward rest (a no-op here, since we just reset).
-      v.setXY(0, (this.startPosition.y - pos.y) / Constants.EMF_RESTORE_DIVISOR);
-      location.setXY(pos.x, pos.y + v.y * dt);
+      // Field hasn't reached this antenna yet: stay at rest.
       return;
     }
 
-    if (source.getMovementTypeAt(location) === "oscillate") {
-      // For sinusoidal drive, mirror the source's retarded displacement (its 2nd derivative is
-      // also a sinusoid, so position tracking suffices), scaled down.
-      const dy = (source.getPositionAt(location) - this.startPosition.y) * Constants.EMF_SINUSOIDAL_SCALE;
-      location.setXY(location.x, this.startPosition.y + dy);
-    } else {
-      // Otherwise treat the dynamic field as a force and take a small Verlet step.
-      const a = source.getDynamicFieldAt(location);
-      const dt2 = dt / Constants.EMF_VERLET_DT_DIVISOR; // "complete fudge factor"
-      const newY = pos.y + v.y * dt2 + (a.y * dt2 * dt2) / 2;
-      v.y += ((a.y + this.aPrevious.y) / 2) * dt2;
-      location.setXY(pos.x + v.x * dt, newY);
-      this.aPrevious.set(a);
-    }
+    // Mirror the source's retarded displacement, scaled down (works for both oscillate and manual).
+    const dy = (source.getPositionAt(location) - this.startPosition.y) * Constants.EMF_SINUSOIDAL_SCALE;
+    location.setXY(location.x, this.startPosition.y + dy);
 
     this.setPosition(location);
   }
 
   public reset(): void {
-    this.velocity.setXY(0, 0);
-    this.aPrevious.setXY(0, 0);
     this.location.set(this.startPosition);
     this.setPosition(this.startPosition);
   }

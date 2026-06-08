@@ -53,8 +53,6 @@ const RadioWavesConstants = {
 
   // ── EMF-sensing receiver fudge factors (from emf-sensing.js) ────────────────
   EMF_SINUSOIDAL_SCALE: 0.4, // receiver displacement ÷ source's retarded displacement
-  EMF_VERLET_DT_DIVISOR: 10, // shrinks dt for the receiver's Verlet step
-  EMF_RESTORE_DIVISOR: 30, // ease-back rate toward rest when the field is off
 } as const;
 
 export default RadioWavesConstants;

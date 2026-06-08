@@ -15,12 +15,13 @@ import { ModelViewTransform2 } from "scenerystack/phetcommon";
 import { HBox, Text } from "scenerystack/scenery";
 import { PhetFont, PlayPauseButton, ResetAllButton, StepForwardButton } from "scenerystack/scenery-phet";
 import { ScreenView, type ScreenViewOptions } from "scenerystack/sim";
-import { Checkbox } from "scenerystack/sun";
+import { Checkbox, Panel } from "scenerystack/sun";
 import type { Tandem } from "scenerystack/tandem";
 import { StringManager } from "../../i18n/StringManager.js";
 import RadioWavesColors from "../../RadioWavesColors.js";
 import type { RadioWavesModel } from "../model/RadioWavesModel.js";
 import AntennaNode from "./AntennaNode.js";
+import BackgroundSceneNode from "./BackgroundSceneNode.js";
 import ElectronNode from "./ElectronNode.js";
 import ElectronPositionPlotNode from "./ElectronPositionPlotNode.js";
 import FieldControlPanel from "./FieldControlPanel.js";
@@ -66,6 +67,7 @@ export class RadioWavesScreenView extends ScreenView {
 
     // ── Field visualization (covers the left play region) ─────────────────────
     const fieldCanvasBounds = new Bounds2(0, 0, playRight, layoutBounds.maxY);
+    const backgroundSceneNode = new BackgroundSceneNode(model, modelViewTransform, fieldCanvasBounds);
     const fieldLatticeNode = new FieldLatticeNode(model, modelViewTransform, fieldCanvasBounds);
 
     // ── Antennas + electrons ──────────────────────────────────────────────────
@@ -131,8 +133,16 @@ export class RadioWavesScreenView extends ScreenView {
         font: CHECKBOX_FONT,
         fill: RadioWavesColors.foregroundColorProperty,
       }),
-      { left: layoutBounds.minX + MARGIN, bottom: layoutBounds.maxY - MARGIN },
     );
+    const electronPositionsPanel = new Panel(electronPositionsCheckbox, {
+      fill: RadioWavesColors.panelFillProperty,
+      stroke: RadioWavesColors.panelStrokeProperty,
+      cornerRadius: 6,
+      xMargin: 10,
+      yMargin: 8,
+      left: layoutBounds.minX + MARGIN,
+      bottom: layoutBounds.maxY - MARGIN,
+    });
 
     const resetAllButton = new ResetAllButton({
       listener: () => {
@@ -153,10 +163,11 @@ export class RadioWavesScreenView extends ScreenView {
     transmitterPanel.top = MARGIN;
     fieldPanel.right = layoutBounds.maxX - MARGIN;
     fieldPanel.top = transmitterPanel.bottom + MARGIN;
-    legendNode.right = layoutBounds.maxX - MARGIN;
-    legendNode.top = fieldPanel.bottom + MARGIN;
+    legendNode.left = MARGIN;
+    legendNode.top = MARGIN;
 
     this.children = [
+      backgroundSceneNode,
       fieldLatticeNode,
       transmittingAntennaNode,
       receivingAntennaNode,
@@ -168,7 +179,7 @@ export class RadioWavesScreenView extends ScreenView {
       fieldPanel,
       legendNode,
       playbackControls,
-      electronPositionsCheckbox,
+      electronPositionsPanel,
       resetAllButton,
     ];
 
