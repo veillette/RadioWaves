@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "A SceneryStack port of the Radio Waves & Electromagnetic Fields simulation.",
+  "description": "SceneryStack port of the PhET 'Radio Waves & Electromagnetic Fields' simulation, rebuilt from the legacy PIXI.js + Backbone version. Wiggle an electron and watch EM radiation propagate.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "sharp": "^0.34.5",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14",
+    "vite": "^8.0.16",
     "vite-plugin-pwa": "^1.3.0"
   },
   "engines": {
