@@ -1,26 +1,23 @@
 # Radio Waves & Electromagnetic Fields
 
 A [SceneryStack](https://scenerystack.org/) port of the PhET *Radio Waves & Electromagnetic Fields*
-simulation. Wiggle the electron in the transmitting antenna — by hand or with the sinusoidal oscillator —
-and watch the radiated electric field propagate outward and drive the electron in the distant receiving
-antenna.
+simulation. Wiggle the electron in the transmitting antenna and watch the radiated electric field propagate
+outward and drive the electron in the distant receiving antenna.
 
 ## Features
 
-- **Transmitter movement:** drag the electron manually, or switch to **Oscillate** and set the **frequency**
-  and **amplitude**.
-- **Field display:** *Curve with Vectors*, *Curve*, *Full Field* (2-D arrow grid), or *None*.
-- **Field sense:** show the force on an electron, or the electric field direction.
-- **Field displayed:** the *radiated* (dynamic) field or the *static* field.
-- **Electron Positions:** scrolling oscilloscope plots of the transmitter and receiver electron motion.
-- Play / pause / step controls, light & projector color profiles, English and French localization, and PWA
-  installability.
+- Manual drag or sinusoidal oscillation of the transmitting electron
+- Field display modes: curve with vectors, curve, full field grid, or none
+- Toggle between force-on-electron and electric-field sense
+- Radiated (dynamic) or static field visualization
+- Oscilloscope plots of transmitter and receiver electron motion
+- Play / pause / step, projector mode, English and French UI, and PWA support
 
 ## Quick Start
 
 ```bash
 npm install
-npm run icons    # generate PWA icons from public/icons/icon.svg
+npm run icons    # generate PNG icons from public/icons/icon.svg
 npm start        # dev server → http://localhost:5173
 ```
 
@@ -31,11 +28,11 @@ npm start        # dev server → http://localhost:5173
 | `npm start` / `npm run dev` | Start Vite dev server |
 | `npm run build` | Type-check + production build → `dist/` |
 | `npm run preview` | Preview the production build locally |
-| `npm run check` | TypeScript type check (`src` + `scripts`) |
+| `npm run check` | TypeScript type check |
 | `npm run lint` | Biome lint check |
 | `npm run format` | Auto-format all files |
 | `npm run fix` | Lint + auto-fix |
-| `npm run icons` | Regenerate PWA icons from `public/icons/icon.svg` |
+| `npm run icons` | Regenerate PNG icons from `public/icons/icon.svg` |
 | `npm run clean` | Remove `dist/` |
 
 ## Tech Stack
