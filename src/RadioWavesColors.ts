@@ -1,10 +1,10 @@
-import { Color, ProfileColorProperty } from "scenerystack";
-import radioWaves from "./RadioWavesNamespace.js";
+import { Color, ProfileColorProperty } from "scenerystack/scenery";
+import RadioWavesNamespace from "./RadioWavesNamespace.js";
 
 const { BLACK, WHITE } = Color;
 
 function profileColor(name: string, def: Color | string, projector: Color | string): ProfileColorProperty {
-  return new ProfileColorProperty(radioWaves, name, { default: def, projector });
+  return new ProfileColorProperty(RadioWavesNamespace, name, { default: def, projector });
 }
 
 // ── Panel fills ───────────────────────────────────────────────────────────────
@@ -42,7 +42,5 @@ const RadioWavesColors = {
   plotGridProperty: profileColor("plotGrid", "#3a3f47", "#cccccc"),
   plotLineProperty: profileColor("plotLine", "#4a9fe0", "#2575ba"),
 };
-
-radioWaves.register("RadioWavesColors", RadioWavesColors);
 
 export default RadioWavesColors;

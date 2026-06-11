@@ -19,7 +19,6 @@ import { onReadyToLaunch, PreferencesModel, Sim } from "scenerystack/sim";
 import { Tandem } from "scenerystack/tandem";
 import { StringManager } from "./i18n/StringManager.js";
 import RadioWavesColors from "./RadioWavesColors.js";
-import radioWaves from "./RadioWavesNamespace.js";
 import { RadioWavesScreen } from "./radio-waves/RadioWavesScreen.js";
 
 onReadyToLaunch(() => {
@@ -57,6 +56,5 @@ onReadyToLaunch(() => {
     },
   });
 
-  radioWaves.register("sim", sim);
   sim.start();
 });

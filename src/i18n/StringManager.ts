@@ -5,8 +5,8 @@
  * Provides access to localized strings for all components.
  */
 
-import { LocalizedString, type ReadOnlyProperty } from "scenerystack";
-import radioWaves from "../RadioWavesNamespace.js";
+import type { ReadOnlyProperty } from "scenerystack/axon";
+import { LocalizedString } from "scenerystack/chipper";
 import stringsEn from "./strings_en.json";
 import stringsEs from "./strings_es.json";
 import stringsFr from "./strings_fr.json";
@@ -18,61 +18,62 @@ void (stringsEn satisfies typeof stringsFr);
 // biome-ignore lint/complexity/noVoid: intentional compile-time type assertion
 void (stringsFr satisfies typeof stringsEn);
 
+// ── Build the reactive string property tree ───────────────────────────────────
+const stringProperties = LocalizedString.getNestedStringProperties({
+  en: stringsEn,
+  fr: stringsFr,
+  es: stringsEs,
+});
+
 export class StringManager {
-  private static instance: StringManager;
-  private readonly stringProperties;
+  private static instance: StringManager | null = null;
 
   private constructor() {
-    this.stringProperties = LocalizedString.getNestedStringProperties({
-      en: stringsEn,
-      fr: stringsFr,
-      es: stringsEs,
-    });
+    // Private — obtain via getInstance()
   }
 
   public static getInstance(): StringManager {
-    if (!StringManager.instance) {
+    if (StringManager.instance === null) {
       StringManager.instance = new StringManager();
-      radioWaves.register("StringManager", StringManager.instance);
     }
     return StringManager.instance;
   }
 
   public getTitleStringProperty(): ReadOnlyProperty<string> {
-    return this.stringProperties.titleStringProperty;
+    return stringProperties.titleStringProperty;
   }
 
   public getScreenNames(): { radioWavesStringProperty: ReadOnlyProperty<string> } {
     return {
-      radioWavesStringProperty: this.stringProperties.screens.radioWavesStringProperty,
+      radioWavesStringProperty: stringProperties.screens.radioWavesStringProperty,
     };
   }
 
   public getTransmitterMovementStrings() {
-    return this.stringProperties.transmitterMovement;
+    return stringProperties.transmitterMovement;
   }
 
   public getFieldDisplayTypeStrings() {
-    return this.stringProperties.fieldDisplayType;
+    return stringProperties.fieldDisplayType;
   }
 
   public getFieldSenseStrings() {
-    return this.stringProperties.fieldSense;
+    return stringProperties.fieldSense;
   }
 
   public getFieldDisplayedStrings() {
-    return this.stringProperties.fieldDisplayed;
+    return stringProperties.fieldDisplayed;
   }
 
   public getElectronPositionsStringProperty(): ReadOnlyProperty<string> {
-    return this.stringProperties.electronPositionsStringProperty;
+    return stringProperties.electronPositionsStringProperty;
   }
 
   public getPlotStrings() {
-    return this.stringProperties.plots;
+    return stringProperties.plots;
   }
 
   public getLegendStrings() {
-    return this.stringProperties.legend;
+    return stringProperties.legend;
   }
 }
