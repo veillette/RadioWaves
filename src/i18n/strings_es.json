@@ -1,0 +1,40 @@
+{
+  "title": "Ondas de radio y campos electromagnéticos",
+  "screens": {
+    "radioWaves": "Ondas de radio"
+  },
+  "transmitterMovement": {
+    "title": "Movimiento del transmisor",
+    "manual": "Manual",
+    "oscillate": "Oscilar",
+    "frequency": "Frecuencia",
+    "amplitude": "Amplitud"
+  },
+  "fieldDisplayType": {
+    "title": "Visualización del campo",
+    "curveWithVectors": "Curva con vectores",
+    "curve": "Curva",
+    "fullField": "Campo completo",
+    "none": "Ninguno"
+  },
+  "fieldSense": {
+    "title": "Sentido del campo",
+    "forceOnElectron": "Fuerza sobre el electrón",
+    "electricField": "Campo eléctrico"
+  },
+  "fieldDisplayed": {
+    "title": "Campo mostrado",
+    "radiated": "Campo radiado",
+    "static": "Campo estático"
+  },
+  "electronPositions": "Posiciones de los electrones",
+  "plots": {
+    "transmitter": "Posición del electrón transmisor",
+    "receiver": "Posición del electrón receptor",
+    "time": "Tiempo"
+  },
+  "legend": {
+    "title": "Leyenda",
+    "electron": "Electrón"
+  }
+}
