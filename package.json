@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "description": "SceneryStack port of the PhET 'Radio Waves & Electromagnetic Fields' simulation, rebuilt from the legacy PIXI.js + Backbone version. Wiggle an electron and watch EM radiation propagate.",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenPhysics/RadioWaves.git"
