@@ -47,7 +47,7 @@ npm start        # dev server → http://localhost:5173
 
 ## License
 
-MIT. The original simulation is Copyright © Rice University, distributed under the GNU AGPL; this is an
+GNU Affero General Public License v3.0 — see [OpenPhysics org license](https://github.com/OpenPhysics/.github/blob/main/LICENSE). The original simulation is Copyright © Rice University, distributed under the GNU AGPL; this is an
 independent reimplementation.
 
 ## Contributing
