@@ -43,6 +43,14 @@
       "controlArea": "Los controles mueven el electrón transmisor manualmente o lo hacen oscilar a una frecuencia y amplitud elegidas, seleccionan el modo de visualización del campo y lo que representa, muestran las gráficas de posición de los electrones, y reproducen o pausan la simulación. Un botón Restablecer todo devuelve la simulación a su estado inicial.",
       "interactionHint": "Haz oscilar el electrón transmisor y observa cómo la onda electromagnética viaja hacia la antena receptora."
     },
-    "currentDetails": "El transmisor está ajustado a la frecuencia {{frequency}} y la amplitud {{amplitude}}."
+    "currentDetails": "El transmisor está ajustado a la frecuencia {{frequency}} y la amplitud {{amplitude}}.",
+    "controls": {
+      "transmitterElectronName": "Electrón transmisor",
+      "transmitterElectronHelp": "Arrastra hacia arriba o abajo para mover el electrón transmisor a mano.",
+      "movementMode": "Modo de movimiento del transmisor",
+      "fieldDisplay": "Modo de visualización del campo",
+      "fieldSense": "Sentido del campo",
+      "fieldDisplayed": "Campo mostrado"
+    }
   }
 }

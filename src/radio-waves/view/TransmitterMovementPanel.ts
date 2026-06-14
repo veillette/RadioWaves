@@ -31,6 +31,7 @@ const NUMBER_DECIMAL_PLACES = 0;
 export default class TransmitterMovementPanel extends Panel {
   public constructor(model: RadioWavesModel) {
     const strings = StringManager.getInstance().getTransmitterMovementStrings();
+    const a11y = StringManager.getInstance().getA11yStrings();
 
     const header = new Text(strings.titleStringProperty, {
       font: TITLE_FONT,
@@ -46,7 +47,7 @@ export default class TransmitterMovementPanel extends Panel {
         { value: "manual", createNode: () => label(strings.manualStringProperty) },
         { value: "oscillate", createNode: () => label(strings.oscillateStringProperty) },
       ],
-      { spacing: RADIO_SPACING },
+      { spacing: RADIO_SPACING, accessibleName: a11y.controls.movementModeStringProperty },
     );
 
     const numberControlOptions = {

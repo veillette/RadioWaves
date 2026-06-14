@@ -43,6 +43,14 @@
       "controlArea": "Les commandes déplacent l'électron émetteur manuellement ou le font osciller à une fréquence et une amplitude choisies, sélectionnent le mode d'affichage du champ et ce qu'il représente, affichent les tracés de position des électrons, et lisent ou mettent en pause la simulation. Un bouton Tout réinitialiser ramène la simulation à son état initial.",
       "interactionHint": "Faites osciller l'électron émetteur et observez l'onde électromagnétique se propager vers l'antenne réceptrice."
     },
-    "currentDetails": "L'émetteur est réglé à la fréquence {{frequency}} et à l'amplitude {{amplitude}}."
+    "currentDetails": "L'émetteur est réglé à la fréquence {{frequency}} et à l'amplitude {{amplitude}}.",
+    "controls": {
+      "transmitterElectronName": "Électron émetteur",
+      "transmitterElectronHelp": "Faites glisser vers le haut ou le bas pour déplacer l'électron émetteur à la main.",
+      "movementMode": "Mode de mouvement de l'émetteur",
+      "fieldDisplay": "Mode d'affichage du champ",
+      "fieldSense": "Sens du champ",
+      "fieldDisplayed": "Champ affiché"
+    }
   }
 }

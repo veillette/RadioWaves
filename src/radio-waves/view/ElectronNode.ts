@@ -10,6 +10,7 @@ import type { ReadOnlyProperty } from "scenerystack";
 import type { Vector2 } from "scenerystack/dot";
 import type { ModelViewTransform2 } from "scenerystack/phetcommon";
 import { Circle, DragListener, Node } from "scenerystack/scenery";
+import { StringManager } from "../../i18n/StringManager.js";
 import RadioWavesColors from "../../RadioWavesColors.js";
 
 const RADIUS = 9;
@@ -27,7 +28,18 @@ export default class ElectronNode extends Node {
     options: ElectronNodeOptions = {},
   ) {
     const draggable = options.onDrag !== undefined;
-    super(draggable ? { cursor: "pointer" } : {});
+    const a11y = StringManager.getInstance().getA11yStrings();
+    super(
+      draggable
+        ? {
+            cursor: "pointer",
+            tagName: "div",
+            focusable: true,
+            accessibleName: a11y.controls.transmitterElectronNameStringProperty,
+            accessibleHelpText: a11y.controls.transmitterElectronHelpStringProperty,
+          }
+        : {},
+    );
 
     this.addChild(
       new Circle(RADIUS, {

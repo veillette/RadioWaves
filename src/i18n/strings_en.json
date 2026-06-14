@@ -43,6 +43,14 @@
       "controlArea": "The controls move the transmitter electron manually or oscillate it at a chosen frequency and amplitude, select the field display mode and what the field represents, show the electron-position plots, and play or pause the simulation. A Reset All button returns the simulation to its starting state.",
       "interactionHint": "Oscillate the transmitter electron and watch the electromagnetic wave travel to the receiving antenna."
     },
-    "currentDetails": "The transmitter is set to frequency {{frequency}} and amplitude {{amplitude}}."
+    "currentDetails": "The transmitter is set to frequency {{frequency}} and amplitude {{amplitude}}.",
+    "controls": {
+      "transmitterElectronName": "Transmitter electron",
+      "transmitterElectronHelp": "Drag up or down to move the transmitting electron by hand.",
+      "movementMode": "Transmitter movement mode",
+      "fieldDisplay": "Field display mode",
+      "fieldSense": "Field sense",
+      "fieldDisplayed": "Field displayed"
+    }
   }
 }

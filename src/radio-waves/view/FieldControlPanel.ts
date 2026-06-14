@@ -30,6 +30,7 @@ export default class FieldControlPanel extends Panel {
     const displayStrings = stringManager.getFieldDisplayTypeStrings();
     const senseStrings = stringManager.getFieldSenseStrings();
     const displayedStrings = stringManager.getFieldDisplayedStrings();
+    const a11y = stringManager.getA11yStrings();
 
     const header = (text: ReadOnlyProperty<string>): Text =>
       new Text(text, { font: HEADER_FONT, fill: RadioWavesColors.foregroundColorProperty });
@@ -44,7 +45,7 @@ export default class FieldControlPanel extends Panel {
         { value: "fullField", createNode: () => label(displayStrings.fullFieldStringProperty) },
         { value: "none", createNode: () => label(displayStrings.noneStringProperty) },
       ],
-      { spacing: RADIO_SPACING },
+      { spacing: RADIO_SPACING, accessibleName: a11y.controls.fieldDisplayStringProperty },
     );
 
     const senseGroup = new AquaRadioButtonGroup<FieldSense>(
@@ -53,7 +54,7 @@ export default class FieldControlPanel extends Panel {
         { value: "forceOnElectron", createNode: () => label(senseStrings.forceOnElectronStringProperty) },
         { value: "electricField", createNode: () => label(senseStrings.electricFieldStringProperty) },
       ],
-      { spacing: RADIO_SPACING },
+      { spacing: RADIO_SPACING, accessibleName: a11y.controls.fieldSenseStringProperty },
     );
 
     const displayedGroup = new AquaRadioButtonGroup<FieldDisplayed>(
@@ -62,7 +63,7 @@ export default class FieldControlPanel extends Panel {
         { value: "radiated", createNode: () => label(displayedStrings.radiatedStringProperty) },
         { value: "static", createNode: () => label(displayedStrings.staticStringProperty) },
       ],
-      { spacing: RADIO_SPACING },
+      { spacing: RADIO_SPACING, accessibleName: a11y.controls.fieldDisplayedStringProperty },
     );
 
     const content = new VBox({
