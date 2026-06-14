@@ -52,5 +52,9 @@
       "fieldSense": "Sentido del campo",
       "fieldDisplayed": "Campo mostrado"
     }
+  },
+  "preferences": {
+    "title": "Simulación",
+    "showPositionPlots": "Mostrar gráficos de posición"
   }
 }

@@ -85,4 +85,9 @@ export class StringManager {
   public getLegendStrings() {
     return stringProperties.legend;
   }
+
+  /** Simulation-specific preference labels shown in Preferences → Simulation. */
+  public getPreferences() {
+    return stringProperties.preferences;
+  }
 }

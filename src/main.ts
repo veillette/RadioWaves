@@ -18,14 +18,20 @@ import "./brand.js";
 import { onReadyToLaunch, PreferencesModel, Sim } from "scenerystack/sim";
 import { Tandem } from "scenerystack/tandem";
 import { StringManager } from "./i18n/StringManager.js";
+import { RadioWavesPreferencesModel } from "./preferences/RadioWavesPreferencesModel.js";
+import { RadioWavesPreferencesNode } from "./preferences/RadioWavesPreferencesNode.js";
 import RadioWavesColors from "./RadioWavesColors.js";
 import { RadioWavesScreen } from "./radio-waves/RadioWavesScreen.js";
 
 onReadyToLaunch(() => {
   const stringManager = StringManager.getInstance();
 
+  // Simulation-specific preferences; initial values come from radioWavesQueryParameters.
+  const radioWavesPreferences = new RadioWavesPreferencesModel(Tandem.ROOT.createTandem("preferences"));
+
   const screens = [
     new RadioWavesScreen({
+      preferences: radioWavesPreferences,
       // The screen name Property updates automatically when the locale changes
       name: stringManager.getScreenNames().radioWavesStringProperty,
       tandem: Tandem.ROOT.createTandem("radioWavesScreen"),
@@ -40,6 +46,13 @@ onReadyToLaunch(() => {
         supportsProjectorMode: true,
         // Enables keyboard-navigation highlight outlines
         supportsInteractiveHighlights: true,
+      },
+      simulationOptions: {
+        customPreferences: [
+          {
+            createContent: (tandem: Tandem) => new RadioWavesPreferencesNode(radioWavesPreferences, tandem),
+          },
+        ],
       },
       localizationOptions: {
         // Adds a language picker in Preferences → Language

@@ -14,6 +14,8 @@
 import { BooleanProperty, Emitter, NumberProperty, Property } from "scenerystack/axon";
 import { type Bounds2, Vector2 } from "scenerystack/dot";
 import type { TModel } from "scenerystack/joist";
+import type { RadioWavesPreferencesModel } from "../../preferences/RadioWavesPreferencesModel.js";
+import radioWavesQueryParameters from "../../preferences/radioWavesQueryParameters.js";
 import Antenna from "./Antenna.js";
 import Electron from "./Electron.js";
 import EmfSensingElectron from "./EmfSensingElectron.js";
@@ -40,7 +42,7 @@ export class RadioWavesModel implements TModel {
   public readonly fieldDisplayTypeProperty = new Property<FieldDisplayType>("curveWithVectors");
   public readonly fieldSenseProperty = new Property<FieldSense>("forceOnElectron");
   public readonly fieldDisplayedProperty = new Property<FieldDisplayed>("radiated");
-  public readonly showPositionPlotsProperty = new BooleanProperty(false);
+  public readonly showPositionPlotsProperty = new BooleanProperty(radioWavesQueryParameters.showPositionPlots);
   public readonly isPlayingProperty = new BooleanProperty(true);
 
   // Fires once per fixed physics slice, so views can sample at the constant model cadence.
@@ -52,7 +54,11 @@ export class RadioWavesModel implements TModel {
 
   private timeAccumulator = 0;
 
-  public constructor() {
+  private readonly preferences: RadioWavesPreferencesModel;
+
+  public constructor(preferences: RadioWavesPreferencesModel) {
+    this.preferences = preferences;
+    this.showPositionPlotsProperty.value = preferences.showPositionPlotsProperty.value;
     const origin = Constants.SIMULATION_ORIGIN;
 
     this.transmittingAntenna = new Antenna(
@@ -134,6 +140,7 @@ export class RadioWavesModel implements TModel {
     this.fieldSenseProperty.reset();
     this.fieldDisplayedProperty.reset();
     this.showPositionPlotsProperty.reset();
+    this.showPositionPlotsProperty.value = this.preferences.showPositionPlotsProperty.value;
 
     this.manualStrategy.reset(this.transmittingElectron.startPosition);
     this.sinusoidalStrategy.reset(Constants.FREQUENCY_DEFAULT * Constants.FREQUENCY_SCALE, Constants.AMPLITUDE_DEFAULT);
