@@ -36,5 +36,13 @@
   "legend": {
     "title": "Leyenda",
     "electron": "Electrón"
+  },
+  "a11y": {
+    "screenSummary": {
+      "playArea": "El área de juego muestra una antena transmisora cuyo electrón oscila, irradiando una onda electromagnética hacia una antena receptora. El campo se visualiza entre ellas, con gráficas de osciloscopio del movimiento de cada electrón.",
+      "controlArea": "Los controles mueven el electrón transmisor manualmente o lo hacen oscilar a una frecuencia y amplitud elegidas, seleccionan el modo de visualización del campo y lo que representa, muestran las gráficas de posición de los electrones, y reproducen o pausan la simulación. Un botón Restablecer todo devuelve la simulación a su estado inicial.",
+      "interactionHint": "Haz oscilar el electrón transmisor y observa cómo la onda electromagnética viaja hacia la antena receptora."
+    },
+    "currentDetails": "El transmisor está ajustado a la frecuencia {{frequency}} y la amplitud {{amplitude}}."
   }
 }

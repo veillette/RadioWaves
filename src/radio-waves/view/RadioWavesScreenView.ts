@@ -12,7 +12,7 @@
 import { DerivedProperty } from "scenerystack/axon";
 import { Bounds2, Vector2 } from "scenerystack/dot";
 import { ModelViewTransform2 } from "scenerystack/phetcommon";
-import { HBox, Text } from "scenerystack/scenery";
+import { HBox, Node, Text } from "scenerystack/scenery";
 import { PhetFont, PlayPauseButton, ResetAllButton, StepForwardButton } from "scenerystack/scenery-phet";
 import { ScreenView, type ScreenViewOptions } from "scenerystack/sim";
 import { Checkbox, Panel } from "scenerystack/sun";
@@ -27,6 +27,7 @@ import ElectronPositionPlotNode from "./ElectronPositionPlotNode.js";
 import FieldControlPanel from "./FieldControlPanel.js";
 import FieldLatticeNode from "./FieldLatticeNode.js";
 import LegendNode from "./LegendNode.js";
+import { RadioWavesScreenSummaryContent } from "./RadioWavesScreenSummaryContent.js";
 import TransmitterMovementPanel from "./TransmitterMovementPanel.js";
 
 type RadioWavesScreenViewOptions = ScreenViewOptions & { tandem: Tandem };
@@ -40,7 +41,7 @@ const CHECKBOX_FONT = new PhetFont(14);
 
 export class RadioWavesScreenView extends ScreenView {
   public constructor(model: RadioWavesModel, providedOptions: RadioWavesScreenViewOptions) {
-    super(providedOptions);
+    super({ ...providedOptions, screenSummaryContent: new RadioWavesScreenSummaryContent(model) });
 
     const layoutBounds = this.layoutBounds;
 
@@ -182,6 +183,23 @@ export class RadioWavesScreenView extends ScreenView {
       electronPositionsPanel,
       resetAllButton,
     ];
+
+    // ── Accessibility: keyboard / reading traversal order ───────────────────────
+    // Deterministic Tab/reading order: the draggable transmitter electron first,
+    // then the control panels, playback controls, and Reset All last. ScreenView
+    // throws if you set pdomOrder on itself, so use a wrapper Node.
+    this.addChild(
+      new Node({
+        pdomOrder: [
+          transmittingElectronNode,
+          transmitterPanel,
+          fieldPanel,
+          electronPositionsPanel,
+          playbackControls,
+          resetAllButton,
+        ],
+      }),
+    );
 
     // ── Frame wiring ──────────────────────────────────────────────────────────
     // Repaint the field whenever the source electron moves (each played frame, and on reset).

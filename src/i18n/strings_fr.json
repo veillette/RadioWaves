@@ -36,5 +36,13 @@
   "legend": {
     "title": "Légende",
     "electron": "Électron"
+  },
+  "a11y": {
+    "screenSummary": {
+      "playArea": "La zone de jeu montre une antenne émettrice dont l'électron oscille, rayonnant une onde électromagnétique vers une antenne réceptrice. Le champ est visualisé entre elles, avec des tracés d'oscilloscope du mouvement de chaque électron.",
+      "controlArea": "Les commandes déplacent l'électron émetteur manuellement ou le font osciller à une fréquence et une amplitude choisies, sélectionnent le mode d'affichage du champ et ce qu'il représente, affichent les tracés de position des électrons, et lisent ou mettent en pause la simulation. Un bouton Tout réinitialiser ramène la simulation à son état initial.",
+      "interactionHint": "Faites osciller l'électron émetteur et observez l'onde électromagnétique se propager vers l'antenne réceptrice."
+    },
+    "currentDetails": "L'émetteur est réglé à la fréquence {{frequency}} et à l'amplitude {{amplitude}}."
   }
 }

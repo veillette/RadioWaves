@@ -15,6 +15,14 @@ SceneryStack port of the PhET *Radio Waves & Electromagnetic Fields* simulation 
 | View | `src/radio-waves/view/` — antenna nodes, field display, control panel |
 | Colors | `RadioWavesColors.ts`, `RadioWavesNamespace.ts` |
 
+## Accessibility
+
+Follows the shared [OpenPhysics accessibility convention](https://github.com/OpenPhysics/OpenPhysics/blob/main/ACCESSIBILITY.md).
+`RadioWavesScreenView` registers `RadioWavesScreenSummaryContent` (live current-details:
+transmitter frequency + amplitude) via the `screenSummaryContent` super-option, and orders the
+PDOM through a wrapper `Node`. A11y strings live under the top-level `a11y` key in each locale
+JSON, via `StringManager.getA11yStrings()`.
+
 ## Notes
 
 - Field display modes: curve with vectors, curve, full field grid, or none
